@@ -9,9 +9,13 @@ The Crowdfunding Blockchain App aims to revolutionize the way we raise funds for
 **Features**
 
 1.Decentralized crowdfunding platform built on Ethereum
+
 2.Smart contracts to ensure transparency and security
+
 3.User-friendly interface for project creators and backers
+
 4.Supports ERC-20 compatible tokens for fundraising
+
 5.Milestone-based fund release mechanism
 
 **Getting Started**
