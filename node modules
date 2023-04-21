@@ -1,0 +1,4 @@
+To set up the required dependencies for your crowdfunding app, you can use the following commands to install the necessary Node modules:
+
+Install web3.js library to interact with the Ethereum blockchain:
+npm install web3
