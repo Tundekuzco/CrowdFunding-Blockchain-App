@@ -45,7 +45,9 @@ npm install
 **Deployment**
 
 1.Start your Ethereum test environment (e.g., Ganache).
+
 2.Deploy the smart contracts:
+
 truffle migrate --reset
 
 **3.Run the development server:**
