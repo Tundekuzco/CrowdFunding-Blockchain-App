@@ -1,0 +1,64 @@
+pragma solidity ^0.8.0;
+
+contract Crowdfunding {
+    struct Project {
+        address payable owner;
+        uint256 fundingGoal;
+        uint256 deadline;
+        uint256 totalFundsRaised;
+        bool isFunded;
+        mapping(address => uint256) contributions;
+    }
+
+    uint256 public projectCount;
+    mapping(uint256 => Project) public projects;
+
+    event ProjectCreated(uint256 projectId, address owner, uint256 fundingGoal, uint256 deadline);
+    event FundsReceived(uint256 projectId, address contributor, uint256 amount);
+    event FundsWithdrawn(uint256 projectId, address owner, uint256 amount);
+
+    function createProject(uint256 _fundingGoal, uint256 _duration) external {
+        uint256 projectId = projectCount++;
+        projects[projectId] = Project({
+            owner: payable(msg.sender),
+            fundingGoal: _fundingGoal,
+            deadline: block.timestamp + _duration,
+            totalFundsRaised: 0,
+            isFunded: false
+        });
+
+        emit ProjectCreated(projectId, msg.sender, _fundingGoal, block.timestamp + _duration);
+    }
+
+    function contribute(uint256 _projectId) external payable {
+        Project storage project = projects[_projectId];
+        require(block.timestamp < project.deadline, "Project deadline has passed.");
+        project.contributions[msg.sender] += msg.value;
+        project.totalFundsRaised += msg.value;
+        emit FundsReceived(_projectId, msg.sender, msg.value);
+    }
+
+    function withdraw(uint256 _projectId) external {
+        Project storage project = projects[_projectId];
+        require(msg.sender == project.owner, "Only project owner can withdraw funds.");
+        require(block.timestamp >= project.deadline, "Project deadline has not passed.");
+        require(!project.isFunded, "Funds have already been withdrawn.");
+        require(project.totalFundsRaised >= project.fundingGoal, "Project has not reached its funding goal.");
+
+        uint256 amount = project.totalFundsRaised;
+        project.isFunded = true;
+        project.owner.transfer(amount);
+        emit FundsWithdrawn(_projectId, project.owner, amount);
+    }
+
+    function refund(uint256 _projectId) external {
+        Project storage project = projects[_projectId];
+        uint256 contributedAmount = project.contributions[msg.sender];
+        require(block.timestamp >= project.deadline, "Project deadline has not passed.");
+        require(project.totalFundsRaised < project.fundingGoal, "Project has reached its funding goal.");
+        require(contributedAmount > 0, "No funds to refund.");
+
+        project.contributions[msg.sender] = 0;
+        payable(msg.sender).transfer(contributedAmount);
+    }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowdfunding App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Crowdfunding App</h1>
+    </header>
+    <main>
+        <section id="create-project">
+            <h2>Create Project</h2>
+            <form>
+                <label for="fundingGoal">Funding Goal (ETH):</label>
+                <input type="number" id="fundingGoal" step="0.001" required>
+                <label for="duration">Duration (days):</label>
+                <input type="number" id="duration" required>
+                <button type="submit">Create Project</button>
+            </form>
+        </section>
+        <section id="project-details">
+            <h2>Project Details</h2>
+            <form>
+                <label for="projectId">Project ID:</label>
+                <input type="number" id="projectId" required>
+                <button type="submit">View Project</button>
+            </form>
+            <div id="project-info" hidden>
+                <h3 id="project-title"></h3>
+                <p id="project-description"></p>
+                <p id="project-fundingGoal"></p>
+                <p id="project-deadline"></p>
+                <h4>Contribute</h4>
+                <form>
+                    <label for="contributionAmount">Amount (ETH):</label>
+                    <input type="number" id="contributionAmount" step="0.001" required>
+                    <button type="submit">Contribute</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
