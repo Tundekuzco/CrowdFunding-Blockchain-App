@@ -22,8 +22,11 @@ The Crowdfunding Blockchain App aims to revolutionize the way we raise funds for
 **Prerequisites**
 
 1.Node.js (v14.0 or higher)
+
 2.Truffle development framework
+
 3.Ganache or other Ethereum blockchain test environment
+
 4.MetaMask or another web3-enabled browser extension
 
 **Installation**
